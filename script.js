@@ -1,1 +1,7 @@
-console.log('hello world');
+let mainWrp = document.getElementById("mainWrp");
+
+
+function mainPage (){
+    
+
+}
