@@ -174,7 +174,7 @@ function loadListForm () {
     const selectPerson = document.createElement('select');
     selectPerson.id = 'selectPerson';
 
-    selectPerson.insertAdjacentHTML("beforeend", `<option>--Välj person--</option>`);
+    selectPerson.insertAdjacentHTML("beforeend", `<option value="">--Välj person--</option>`);
 
     // const choosePersonPrompt = document.createElement('option');
     // choosePersonPrompt.textContent = "--Välj person--";
@@ -188,6 +188,7 @@ function loadListForm () {
     addListForm.insertAdjacentHTML('beforeend', `<br><label for = "presentInput">ösnkar sig:</label><br>`);
     const presentInput = document.createElement('input');
     presentInput.id = "presentInput";
+    // presentInput.attributes.required = "required";
     addListForm.appendChild(presentInput);
 
     addListForm.insertAdjacentHTML('beforeend', `<br><label for = "presentURL">Länk till ev. webbshop/hemsida för produkten:</label><br>`);
@@ -199,4 +200,12 @@ function loadListForm () {
     submitBtn.id = "submitBtn";
     submitBtn.textContent = "Lägg till";
     addListForm.appendChild(submitBtn);
+
+    document.getElementById('submitBtn').addEventListener('click', evt =>{
+        evt.preventDefault();
+        console.log('click');
+        if (selectPerson.value == ''){
+            console.log('Välj en person!');
+        }
+    });
 }
