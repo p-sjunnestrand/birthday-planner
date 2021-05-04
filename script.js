@@ -1,107 +1,10 @@
 let mainWrp = document.getElementById("mainWrp");
-//temporary person list
-const persons = [
-    {
-        person: "Petter",
-        items: 4
-    },
-    {
-        person: "Norah",
-        items: 0
-    },
-    {
-        person: "David",
-        items: 3
-    },
-    {
-        person: "Ronja",
-        items: 3
-    },
-    {
-        person: "My",
-        items: 0
-    },
-    {
-        person: "Martin",
-        items: 0
-    },
-    {
-        person: "Alvin",
-        items: 0
-    },
-    {
-        person: "Meja",
-        items: 0
-    },
-    {
-        person: "Tove",
-        items: 0
-    },
-    {
-        person: "Tomas",
-        items: 0
-    },
-    {
-        person: "Stella",
-        items: 0
-    },
-    {
-        person: "Margareta",
-        items: 0
-    },
-    {
-        person: "Håkan",
-        items: 0
-    },
-    {
-        person: "Lars-Erik",
-        items: 0
-    }
-];
 
-//Temporary item list
-let wishListItems = [
-    {
-        person: "Petter",
-        item: "Rasberry Pi"
-    },
-    {
-        person: "Petter",
-        item: "Strumpor"
-    },
-    {
-        person: "Petter",
-        item: "Skjortor"
-    },
-    {
-        person: "Petter",
-        item: "Rakkniv"
-    },
-    {
-        person: "Ronja",
-        item: "Enhörningsklänning"
-    },
-    {
-        person: "Ronja",
-        item: "Böcker"
-    },
-    {
-        person: "Ronja",
-        item: "Ryggsäck med Frost-tema"
-    },
-    {
-        person: "David",
-        item: "Leksaksdumper"
-    },
-    {
-        person: "David",
-        item: "Alla sorts kläder"
-    },
-    {
-        person: "David",
-        item: "Leksakståg"
-    }
-]
+const fadedBackdrop = document.createElement('div');
+fadedBackdrop.id = 'fadedBackdrop';
+
+const listColors = ['listGreen', 'listBlue', 'listPurple', 'listPink', 'listOrange'];
+
 mainPage();
 //Loads static assets on main page
 function mainPage (){
@@ -124,44 +27,67 @@ function mainPage (){
     wishListWrp.appendChild(addListBtn);
 
     //populates wishList area with empty lists
-    persons.forEach(person => {
-        if(person.items > 0){
-            // console.log(person);
-            let wishListItem = document.createElement('article');
-            wishListItem.classList.add('wishListItem');
-            
-            wishList.appendChild(wishListItem);
-            const listItemHeader = document.createElement('h3');
-            listItemHeader.classList.add('listItemHeader');
-            listItemHeader.innerHTML = person.person;
-            wishListItem.appendChild(listItemHeader);
-            let wishListItemUl = document.createElement('ul');
-            wishListItemUl.id = person.person;
-            wishListItemUl.classList.add('wishListItemUl');
-            wishListItem.appendChild(wishListItemUl); 
-        }
-    });
-    addLists();
+    wishListLoad();
+    
+    
+}
+function wishListLoad(){
+    fetch('http://localhost:3000/users/')
+    .then(result => result.json())
+    .then(data => {
+        console.log(data);
+        data.forEach((obj, index) => {
+            if(obj.items > 0){
+                // console.log(person);
+                let wishListItem = document.createElement('article');
+                wishListItem.classList.add('wishListItem');
+                wishListItem.classList.add(listColors[index]);
+                wishListItem.id = obj.person;
+                
+                wishList.appendChild(wishListItem);
+
+                // const wishListItemClickerDiv = document.createElement('div');
+                // wishListItemClickerDiv.classList.add('clickerDiv');
+                // wishListItem.appendChild(wishListItemClickerDiv);
+
+                const listItemHeader = document.createElement('h3');
+                listItemHeader.classList.add('listItemHeader');
+                listItemHeader.innerHTML = obj.person;
+                wishListItem.appendChild(listItemHeader);
+                // let wishListItemUl = document.createElement('ul');
+                // wishListItemUl.id = obj.person;
+                // wishListItemUl.classList.add('wishListItemUl');
+                // wishListItem.appendChild(wishListItemUl); 
+
+                addLists(obj.inventory, obj);
+            }
+        });
+    })
 }
 //Adds dynamic wish list items to wishList
-function addLists(){
-    wishListItems.forEach(item => {
-        // console.log(item);
-        let listItemAdd = document.getElementById(item.person);
-        // console.log(listItemAdd);
-        listItemAdd.insertAdjacentHTML('beforeend', `<li>${item.item}</li>`);
+function addLists(inventory, person){
+    inventory.forEach(item => {
+        console.log(item);
+        let listItemAdd = document.getElementById(person.person);
+        console.log(listItemAdd);
+        listItemAdd.insertAdjacentHTML('beforeend', `<li>${item.item_name}</li>`);
     })
 }
 document.getElementById('addListBtn').addEventListener('click', () => {
-    console.log('hej');
+    console.log('load form');
     loadListForm();
+
+})
+document.getElementById('wishList').addEventListener('click', e => {
+    const personList = e.target.parentNode.id;
+    console.log(personList);
+    showFullList(personList);
 
 })
 //Loads a form for adding items and lists to wish list
 function loadListForm () {
     //adds faded backdrop to shift focus to form
-    const fadedBackdrop = document.createElement('div');
-    fadedBackdrop.id = 'fadedBackdrop';
+    
     document.body.insertAdjacentElement("afterbegin", fadedBackdrop);
 
     //adds div in which form is placed
@@ -176,6 +102,7 @@ function loadListForm () {
     addListFormWrp.appendChild(closeFormWindow);
 
     closeFormWindow.addEventListener('click', () =>{
+        fadedBackdrop.innerHTML = '';
         fadedBackdrop.remove();
     })
 
@@ -271,4 +198,71 @@ function itemPosted(present, person) {
     presentDesc.value = '';
     presentURL.value = '';
     presentShop.value = '';
+}
+function showFullList(list){
+    document.body.insertAdjacentElement("afterbegin", fadedBackdrop);
+    let listWrp = document.createElement('div');
+    listWrp.classList.add('listWrp');
+    fadedBackdrop.appendChild(listWrp);
+    fetch('http://localhost:3000/users/')
+    .then(result => result.json())
+    .then(data => {
+        console.log(data);
+        data.forEach(obj => {
+            if(obj.person === list){
+                fetchedInventory = obj.inventory;
+                console.log(fetchedInventory);
+                listWrp.insertAdjacentHTML('beforeend', `<h2 class ="fullListPerson">${obj.person}</h3>`);
+                
+                fetchedInventory.forEach(item => {
+                    const fullListDiv = document.createElement('div');
+                    fullListDiv.classList.add('fullListDiv');
+                    listWrp.appendChild(fullListDiv);
+                    const listUl = document.createElement('ul');
+                    listUl.classList.add('listUl');
+                    fullListDiv.appendChild(listUl);
+                    console.log(item);
+                    for(subitem in item){
+                        // console.log(item[subitem]);
+                        if (item[subitem] !== ''){
+                            switch (subitem){
+                                case 'item_name':
+                                    printFullListContent(listUl, 'fullListItemName', 'Önskemål', item, subitem)
+                                    // listUl.insertAdjacentHTML('beforeend', `<li class = "fullListHeading"><h4>Önskemål<h4></li><li class = "subItem">${item[subitem]}</li>`); 
+                                    break;  
+                                case 'item_desc':
+                                    printFullListContent(listUl, 'fullListHeading', 'Beskrivning', item, subitem)
+                                    // listUl.insertAdjacentHTML('beforeend', `<li class = "fullListHeading">Beskrivning</li><li class = "subItem">${item[subitem]}</li>`);
+                                    break;
+                                case 'item_shop':
+                                    printFullListContent(listUl, 'fullListHeading', 'Finns att köpa i', item, subitem)
+                                    // listUl.insertAdjacentHTML('beforeend', `<li class = "fullListHeading">Finns att köpa i</li><li class = "subItem">${item[subitem]}</li>`);
+                                    break;
+                                case 'item_url':
+                                    listUl.insertAdjacentHTML('beforeend', `<li class = "subItem"><a href ="${item[subitem]}">Hemsida</a></li>`);
+                                    break;
+                            }
+
+                            // // console.log('empty!');
+                            // console.log(subitem);
+                            // if (subitem === 'item_url')
+                            // {
+                            //     console.log('URL');
+                            //     listUl.insertAdjacentHTML('beforeend', `<li class = "subItem"><a href="${item[subitem]}">Hemsida</a></li>`);
+                            // } else {
+                            //     //adds all item fields to list. Gives item_name one class and the others a different class
+                            // listUl.insertAdjacentHTML('beforeend', `<li class = ${subitem == "item_name" ? "itemName" : "subItem"}>${item[subitem]}</li>`);
+                            // }
+                        }
+                    }
+                })
+            }
+        });
+        const closeFullListBtn = document.createElement('button');
+        closeFullListBtn.innerText = 'Stäng';
+        listWrp.appendChild(closeFullListBtn);
+    })
+}
+function printFullListContent(list, headerClass, header, item, subitem){
+    list.insertAdjacentHTML('beforeend', `<li class = ${headerClass}><h4>${header}</h4></li><li class = "subItem">${item[subitem]}</li>`);
 }

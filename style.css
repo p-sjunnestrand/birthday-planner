@@ -1,52 +1,75 @@
 * {
     margin: 0;
     padding: 0;
-    /* border: 1px solid black; */
+    list-style-type: none;
+    font-family: 'Lato', sans-serif;
+}
+header{
+    background-color: #4c0d8c;
+    color: white;
+    min-height: 10vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+body{
+    /* background: rgb(104,15,195);
+    background: linear-gradient(135deg, rgba(104,15,195,1) 0%, rgba(255,105,249,1) 100%); */
+    min-height: 100vh;
 }
 .sectionWrp{
-    background-color: #8298FF;
+    /* background-color: #8298FF; */
+    
     display: flex;
     flex-direction: column;
     align-items: center;
     width: 90%;
-    margin: 0 auto;
+    margin: 2em auto;
     position: relative;
     z-index: 1;
 }
-
+/* h2{
+    /* color: #dfc5fa; */
+/* } */
 #wishList{
     display: flex;
-    width: 100vw;
+    width: 100%;
     height: auto;
     flex-direction: column;
     overflow: auto;
     align-items: center;
-    /* gap: 2em; */
+    gap: 1.5em;
+    margin: 1em 0;
 }
 .wishListItem{
     width: 80%;
-    background-color: white;
-    border-radius: 15px;
-    margin: 2%;
+    /* background-color: #dfc5fa; */
+    background-color:rgb(65, 150, 124);
+    border-radius: 3px;
     overflow: hidden;
-    box-shadow: 3px 3px 5px black;
+    /* box-shadow: 3px 3px 5px black; */
+    /* border: 3px solid dodgerblue; */
+    box-sizing: border-box;
+    color: white;
 }
 .wishListItem:hover{
     box-shadow: 0px 0px 10px white;
 }
-.wishListItemUl{
+/* .wishListItemUl{
     list-style-type: none;
 }
 .wishListItemUl li{
-    padding-left: 5%;
-}
+    padding-left: 1em;
+} */
 .listItemHeader{
-    background-color: lightblue;
+    /* background-color: #4c0d8c; */
+    background-color: rgb(43, 99, 82);
     font-weight: normal;
     text-align: center;
+    color: white;
 }
 #fadedBackdrop{
-    height: 100vh;
+    min-height: 100vh;
     width: 100vw;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.7);
@@ -59,4 +82,42 @@
 }
 .warning{
     color: red;
+}
+.listWrp{
+    background: rgb(153,94,186);
+    background: linear-gradient(180deg, rgba(153,94,186,1) 0%, rgba(255,255,255,1) 50%);
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+}
+.fullListPerson{
+    /* background-color: #995EBA; */
+    color: white;
+    width: 100%;
+    text-align: center;
+}
+.fullListDiv{
+    width: 90%;
+    background-color: white;
+    /* box-shadow: 5px 5px 10px #3B3B3C; */
+    border-radius: 10px;
+    text-align: center;
+    overflow: hidden;
+    
+}
+.fullListDiv li {
+    padding: 5px;
+}
+.fullListItemName{
+    background-color: #DFBEEB;
+    padding: 0;
+}
+.fullListHeading{
+    text-decoration: underline;
+}
+.clickerDiv{
+    height: 100%;
 }
