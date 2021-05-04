@@ -3,7 +3,8 @@ let mainWrp = document.getElementById("mainWrp");
 const fadedBackdrop = document.createElement('div');
 fadedBackdrop.id = 'fadedBackdrop';
 
-const listColors = ['listGreen', 'listBlue', 'listPurple', 'listPink', 'listOrange'];
+const listColors = ['listGreen', 'listBlue', 'listPurple', 'listPink', 'listOrange', 'listRed'];
+const listHeaderColors = ['listHeaderGreen', 'listHeaderBlue', 'listHeaderPurple', 'listHeaderPink', 'listHeaderOrange', 'listHeaderRed']
 
 mainPage();
 //Loads static assets on main page
@@ -41,7 +42,7 @@ function wishListLoad(){
                 // console.log(person);
                 let wishListItem = document.createElement('article');
                 wishListItem.classList.add('wishListItem');
-                wishListItem.classList.add(listColors[index]);
+                wishListItem.classList.add(listColors[index %listColors.length]);
                 wishListItem.id = obj.person;
                 
                 wishList.appendChild(wishListItem);
@@ -52,6 +53,7 @@ function wishListLoad(){
 
                 const listItemHeader = document.createElement('h3');
                 listItemHeader.classList.add('listItemHeader');
+                listItemHeader.classList.add(listHeaderColors[index %listHeaderColors.length]);
                 listItemHeader.innerHTML = obj.person;
                 wishListItem.appendChild(listItemHeader);
                 // let wishListItemUl = document.createElement('ul');
@@ -118,7 +120,7 @@ function loadListForm () {
     // const choosePersonPrompt = document.createElement('option');
     // choosePersonPrompt.textContent = "--Välj person--";
     // selectPerson.appendChild(choosePersonPrompt);
-
+    const persons = ['Petter', 'Norah', 'David', 'Ronja', 'My', 'Martin', 'Alvin', 'Meja', 'Tove', 'Tomas', 'Stella', 'Margareta', 'Håkan', 'Lars-Erik'];
     persons.forEach(person => {
         selectPerson.insertAdjacentHTML('beforeend', `<option value = "${person.person}">${person.person}</option>`);
     });
@@ -212,7 +214,15 @@ function showFullList(list){
             if(obj.person === list){
                 fetchedInventory = obj.inventory;
                 console.log(fetchedInventory);
-                listWrp.insertAdjacentHTML('beforeend', `<h2 class ="fullListPerson">${obj.person}</h3>`);
+                const fullListNameHeader = document.createElement('div');
+                fullListNameHeader.insertAdjacentHTML('beforeend', `<h2 class ="fullListPerson">${obj.person}</h2>`);
+                fullListNameHeader.id = 'fullListNameHeader';
+
+                const fullListExitBtn = document.createElement('button');
+                fullListExitBtn.innerText = 'x';
+                fullListExitBtn.id = 'fullListExitBtn';
+                fullListNameHeader.appendChild(fullListExitBtn);
+                listWrp.appendChild(fullListNameHeader);
                 
                 fetchedInventory.forEach(item => {
                     const fullListDiv = document.createElement('div');

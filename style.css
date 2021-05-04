@@ -5,7 +5,7 @@
     font-family: 'Lato', sans-serif;
 }
 header{
-    background-color: #4c0d8c;
+    background-color: #666699;
     color: white;
     min-height: 10vh;
     display: flex;
@@ -16,6 +16,8 @@ body{
     /* background: rgb(104,15,195);
     background: linear-gradient(135deg, rgba(104,15,195,1) 0%, rgba(255,105,249,1) 100%); */
     min-height: 100vh;
+    background-color: #e6e6e6
+    ;
 }
 .sectionWrp{
     /* background-color: #8298FF; */
@@ -41,10 +43,17 @@ body{
     gap: 1.5em;
     margin: 1em 0;
 }
+.listItemHeader{
+    /* background-color: #4c0d8c; */
+    /* background-color: rgb(43, 99, 82); */
+    font-weight: normal;
+    text-align: center;
+    color: white;
+}
 .wishListItem{
     width: 80%;
     /* background-color: #dfc5fa; */
-    background-color:rgb(65, 150, 124);
+    
     border-radius: 3px;
     overflow: hidden;
     /* box-shadow: 3px 3px 5px black; */
@@ -61,12 +70,15 @@ body{
 .wishListItemUl li{
     padding-left: 1em;
 } */
-.listItemHeader{
-    /* background-color: #4c0d8c; */
-    background-color: rgb(43, 99, 82);
-    font-weight: normal;
-    text-align: center;
+#addListBtn{
+    all: revert;
+    border: 3px solid #333344;
+    font-size: 100%;
     color: white;
+    width: 80%;
+    margin-top: 1em;
+    height: 2em;
+    background-color: #666699;
 }
 #fadedBackdrop{
     min-height: 100vh;
@@ -118,6 +130,49 @@ body{
 .fullListHeading{
     text-decoration: underline;
 }
-.clickerDiv{
-    height: 100%;
+#fullListNameHeader{
+    width: 100%;
+    position: sticky;
+    top: 0;
+    display: flex;
+}
+#fullListExitBtn{
+    width: 10%;
+    /* height: 100%; */
+}
+.listGreen{
+    background-color:#41967D;
+}
+.listHeaderGreen{
+    background-color: #255748;
+}
+.listBlue{
+    background-color: #0066ff;
+}
+.listHeaderBlue{
+    background-color: #003380;
+}
+.listPurple{
+    background-color: #8B17FF;
+}
+.listHeaderPurple{
+    background-color: #4C0D8C;
+}
+.listPink{
+    background-color: #ff66b3;
+}
+.listHeaderPink{
+    background-color: #BF4D86;
+}
+.listOrange{
+    background-color: #ff8533;
+}
+.listHeaderOrange{
+    background-color: #CC6A29;
+}
+.listRed{
+    background-color: #ff3333;
+}
+.listHeaderRed{
+    background-color: #800000;
 }
