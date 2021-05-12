@@ -1,3 +1,10 @@
+//LOCAL
+let userRoute = 'http://localhost:3000/users/';
+let deleteRoute = 'http://localhost:3000/users/delete';
+//CLOUD
+// let userRoute =
+// let deleteRoute =
+
 let mainWrp = document.getElementById("mainWrp");
 
 const fadedBackdrop = document.createElement('div');
@@ -27,13 +34,18 @@ function mainPage (){
     addListBtn.innerText = "Lägg till nya önskemål";
     wishListWrp.appendChild(addListBtn);
 
+    document.getElementById('addListBtn').addEventListener('click', () => {
+        console.log('load form');
+        loadListForm();
+    
+    })
     //populates wishList area with empty lists
     wishListLoad();
     
     
 }
 function wishListLoad(){
-    fetch('http://localhost:3000/users/')
+    fetch(userRoute)
     .then(result => result.json())
     .then(data => {
         console.log(data);
@@ -60,10 +72,16 @@ function wishListLoad(){
                 // wishListItemUl.id = obj.person;
                 // wishListItemUl.classList.add('wishListItemUl');
                 // wishListItem.appendChild(wishListItemUl); 
-
+                
                 addLists(obj.inventory, obj);
             }
         });
+    })
+    document.getElementById('wishList').addEventListener('click', e => {
+        const personList = e.target.parentNode.id;
+        console.log(personList);
+        showFullList(personList);
+        document.body.classList.add('noScroll');
     })
 }
 //Adds dynamic wish list items to wishList
@@ -75,21 +93,11 @@ function addLists(inventory, person){
         listItemAdd.insertAdjacentHTML('beforeend', `<li>${item.item_name}</li>`);
     })
 }
-document.getElementById('addListBtn').addEventListener('click', () => {
-    console.log('load form');
-    loadListForm();
 
-})
-document.getElementById('wishList').addEventListener('click', e => {
-    const personList = e.target.parentNode.id;
-    console.log(personList);
-    showFullList(personList);
-
-})
 //Loads a form for adding items and lists to wish list
 function loadListForm () {
     //adds faded backdrop to shift focus to form
-    
+    document.getElementById('addListBtn').disabled = true;
     document.body.insertAdjacentElement("afterbegin", fadedBackdrop);
 
     //adds div in which form is placed
@@ -101,16 +109,24 @@ function loadListForm () {
     const closeFormWindow = document.createElement('button');
     closeFormWindow.id = 'closeFormWindow';
     closeFormWindow.innerText = 'X';
-    addListFormWrp.appendChild(closeFormWindow);
+
+    const formHeaderDiv = document.createElement('div');
+    formHeaderDiv.id = 'formHeaderDiv';
+    formHeaderDiv.insertAdjacentHTML('beforeend', `<h3>Skapa ett nytt önskemål</h3>`);
+    formHeaderDiv.appendChild(closeFormWindow);
+    addListFormWrp.appendChild(formHeaderDiv);
 
     closeFormWindow.addEventListener('click', () =>{
         fadedBackdrop.innerHTML = '';
         fadedBackdrop.remove();
+        document.getElementById('addListBtn').disabled = false;
+        mainWrp.innerHTML = '';
+        mainPage();
     })
 
     const addListForm = document.createElement('form');
     addListFormWrp.appendChild(addListForm);
-    addListForm.insertAdjacentHTML('beforeend', `<label for = "selectPerson">Person:</label>`);
+    addListForm.insertAdjacentHTML('beforeend', `<div id="selectDiv"><label for = "selectPerson">Person:</label></div>`);
 
     const selectPerson = document.createElement('select');
     selectPerson.id = 'selectPerson';
@@ -122,56 +138,71 @@ function loadListForm () {
     // selectPerson.appendChild(choosePersonPrompt);
     const persons = ['Petter', 'Norah', 'David', 'Ronja', 'My', 'Martin', 'Alvin', 'Meja', 'Tove', 'Tomas', 'Stella', 'Margareta', 'Håkan', 'Lars-Erik'];
     persons.forEach(person => {
-        selectPerson.insertAdjacentHTML('beforeend', `<option value = "${person.person}">${person.person}</option>`);
+        selectPerson.insertAdjacentHTML('beforeend', `<option value = "${person}">${person}</option>`);
     });
-    addListForm.appendChild(selectPerson);
+    document.getElementById('selectDiv').appendChild(selectPerson);
 
-    addListForm.insertAdjacentHTML('beforeend', `<br><label for = "presentInput">ösnkar sig:</label><br>`);
+    addListForm.insertAdjacentHTML('beforeend', `<div id="presentDiv"><label for = "presentInput">ösnkar sig:</label></div>`);
     const presentInput = document.createElement('input');
     presentInput.id = "presentInput";
     // presentInput.attributes.required = "required";
-    addListForm.appendChild(presentInput);
+    document.getElementById('presentDiv').appendChild(presentInput);
 
-    addListForm.insertAdjacentHTML('beforeend', `<br><label for = "presentDesc">Ev. beskrivning av önskemålet</label><br>`);
+    addListForm.insertAdjacentHTML('beforeend', `<div id="presentDescDiv"<label for = "presentDesc">Ev. beskrivning av önskemålet</label>`);
     const presentDesc = document.createElement('textarea');
     presentDesc.id = "presentDesc";
-    addListForm.appendChild(presentDesc);
+    document.getElementById('presentDescDiv').appendChild(presentDesc);
 
-    addListForm.insertAdjacentHTML('beforeend', `<br><label for = "presentURL">Länk till ev. webbshop/hemsida för produkten:</label><br>`);
+    addListForm.insertAdjacentHTML('beforeend', `<div id="presentURLdiv"><label for = "presentURL">Länk till ev. webbshop/hemsida för produkten:</label>`);
     const presentURL = document.createElement('input');
     presentURL.id = "presentURL";
-    addListForm.appendChild(presentURL);
+    document.getElementById('presentURLdiv').appendChild(presentURL);
 
-    addListForm.insertAdjacentHTML('beforeend', `<br><label for = "presentShop">Ev. butik där det önskade kan köpas</label><br>`);
+    addListForm.insertAdjacentHTML('beforeend', `<div id="presentShopDiv"><label for = "presentShop">Ev. butik där det önskade kan köpas</label>`);
     const presentShop = document.createElement('input');
     presentShop.id = "presentShop";
-    addListForm.appendChild(presentShop);
+    document.getElementById('presentShopDiv').appendChild(presentShop);
 
     const submitBtn = document.createElement("button");
     submitBtn.id = "submitBtn";
     submitBtn.textContent = "Lägg till";
     addListForm.appendChild(submitBtn);
 
+    const submitWarning = document.createElement('div');
+    submitWarning.id = 'submitWarning';
+    submitWarning.classList.add('warning');
+    addListFormWrp.appendChild(submitWarning);
+
+    const submitMsg = document.createElement('div');
+    submitMsg.id = 'submitMsg';
+    // submitMsg.classList.add('submitWarning');
+    addListFormWrp.appendChild(submitMsg);
+
     document.getElementById('submitBtn').addEventListener('click', evt =>{
         evt.preventDefault();
         console.log('click');
-        if (selectPerson.value === ''){
+        if (selectPerson.value === '' || presentInput.value === ''){
             console.log('Välj person och önskemål!');
-            addListFormWrp.insertAdjacentHTML('beforeend', `<div class = "warning">Välj en person och skriv något hen önskar sig!</div>`);
-            selectPerson.style.border = '3px solid red';
-            presentInput.style.border = '3px solid red';
+            submitWarning.innerHTML = 'Välj en person och skriv något hen önskar sig!';
+            // selectPerson.style.border = '3px solid red';
+            // presentInput.style.border = '3px solid red';
+            selectPerson.classList.add('redBorder');
+            presentInput.classList.add('redBorder');
         } else {
+            selectPerson.classList.remove('redBorder');
+            presentInput.classList.remove('redBorder');
             const postedItem = {
                 "person": selectPerson.value,
                 "item": {
                     "item_name": presentInput.value,
                     "item_desc": presentDesc.value,
                     "item_url": presentURL.value,
-                    "item_shop": presentShop.value
+                    "item_shop": presentShop.value,
+                    "item_id": ""
                 }
             }
             console.log(postedItem);
-            fetch('http://localhost:3000/users/', {
+            fetch(userRoute, {
                 method: 'post',
                 headers: {
                     'Content-Type' : 'application/json'
@@ -192,60 +223,89 @@ function loadListForm () {
 }
 
 function itemNotPosted(){
-    document.getElementById('addListFormWrp').insertAdjacentHTML('beforeend', `<div class = "warning">Något gick fel. Prova att lägga till önskemålet igen. Om det inte fungerar, prova att ladda om sidan.</div>`);
+    submitWarning.innerHTML = 'Något gick fel. Prova att lägga till önskemålet igen. Om det inte fungerar, prova att ladda om sidan.';
 }
 function itemPosted(present, person) {
-    document.getElementById('addListFormWrp').insertAdjacentHTML('beforeend', `<div>${present} tillagd ${person}s önskelista!</div>`);
+    submitWarning.innerHTML = '';
+    submitMsg.insertAdjacentHTML('beforeend', `<div>${present} tillagd ${person}s önskelista!</div>`);
     presentInput.value = '';
     presentDesc.value = '';
     presentURL.value = '';
     presentShop.value = '';
 }
 function showFullList(list){
+    console.log(list);
     document.body.insertAdjacentElement("afterbegin", fadedBackdrop);
     let listWrp = document.createElement('div');
     listWrp.classList.add('listWrp');
     fadedBackdrop.appendChild(listWrp);
-    fetch('http://localhost:3000/users/')
+    fetch(userRoute)
     .then(result => result.json())
     .then(data => {
         console.log(data);
-        data.forEach(obj => {
+        data.forEach((obj, index) => {
             if(obj.person === list){
+                console.log(obj);
                 fetchedInventory = obj.inventory;
                 console.log(fetchedInventory);
                 const fullListNameHeader = document.createElement('div');
-                fullListNameHeader.insertAdjacentHTML('beforeend', `<h2 class ="fullListPerson">${obj.person}</h2>`);
+                fullListNameHeader.insertAdjacentHTML('beforeend', `<h2 class ="fullListPerson">${obj.person}s önskelista</h2>`);
                 fullListNameHeader.id = 'fullListNameHeader';
 
                 const fullListExitBtn = document.createElement('button');
                 fullListExitBtn.innerText = 'x';
-                fullListExitBtn.id = 'fullListExitBtn';
+                fullListExitBtn.id = 'fullListExitCornerBtn';
                 fullListNameHeader.appendChild(fullListExitBtn);
                 listWrp.appendChild(fullListNameHeader);
                 
+                fullListExitBtn.addEventListener('click', ()=>{
+                    console.log('click on corner');
+                    fadedBackdrop.innerHTML = '';
+                    fadedBackdrop.remove();
+                    mainWrp.innerHTML = '';
+                    mainPage();
+                    document.body.classList.remove('noScroll');
+                })
+
+                let incr = 0;
                 fetchedInventory.forEach(item => {
+                    incr++;
                     const fullListDiv = document.createElement('div');
                     fullListDiv.classList.add('fullListDiv');
+        
+                    fullListDiv.classList.add(listColors[index %listColors.length]);
                     listWrp.appendChild(fullListDiv);
                     const listUl = document.createElement('ul');
                     listUl.classList.add('listUl');
                     fullListDiv.appendChild(listUl);
+
+                    listUl.addEventListener('click', (e)=>{
+                        if(e.target.nodeName === 'BUTTON'){
+                            console.log('click on button!');
+                            deleteItem(e, list);
+                        }
+                    })
                     console.log(item);
                     for(subitem in item){
-                        // console.log(item[subitem]);
+                        console.log(item.item_id);
+                        console.log(item[subitem]);
+                        let subItemConts = item[subitem];
                         if (item[subitem] !== ''){
                             switch (subitem){
                                 case 'item_name':
-                                    printFullListContent(listUl, 'fullListItemName', 'Önskemål', item, subitem)
+                                    subItemConts = `<strong>${item[subitem]}</strong>`
+                                    // printFullListContent(listUl, listHeaderColors[index %listColors.length], wishTitle, subItemConts);
+                                    // let closeBtnId = item[subitem].replace(/ /g,'')
+                                    // console.log(closeBtnId);
+                                    listUl.insertAdjacentHTML('beforeend', `<li class = "${listHeaderColors[index %listColors.length]} listHeaderItemName"><div class="listHeaderItemNameDiv">${item[subitem]}</div><button class="listHeaderItemNameCloseBtn" id="${item.item_id}">X</button></li>`);
                                     // listUl.insertAdjacentHTML('beforeend', `<li class = "fullListHeading"><h4>Önskemål<h4></li><li class = "subItem">${item[subitem]}</li>`); 
                                     break;  
                                 case 'item_desc':
-                                    printFullListContent(listUl, 'fullListHeading', 'Beskrivning', item, subitem)
+                                    printFullListContent(listUl, 'fullListHeading', 'Beskrivning', subItemConts)
                                     // listUl.insertAdjacentHTML('beforeend', `<li class = "fullListHeading">Beskrivning</li><li class = "subItem">${item[subitem]}</li>`);
                                     break;
                                 case 'item_shop':
-                                    printFullListContent(listUl, 'fullListHeading', 'Finns att köpa i', item, subitem)
+                                    printFullListContent(listUl, 'fullListHeading', 'Finns att köpa', subItemConts)
                                     // listUl.insertAdjacentHTML('beforeend', `<li class = "fullListHeading">Finns att köpa i</li><li class = "subItem">${item[subitem]}</li>`);
                                     break;
                                 case 'item_url':
@@ -263,16 +323,49 @@ function showFullList(list){
                             //     //adds all item fields to list. Gives item_name one class and the others a different class
                             // listUl.insertAdjacentHTML('beforeend', `<li class = ${subitem == "item_name" ? "itemName" : "subItem"}>${item[subitem]}</li>`);
                             // }
+                            
                         }
+                        
                     }
                 })
             }
         });
         const closeFullListBtn = document.createElement('button');
         closeFullListBtn.innerText = 'Stäng';
+        closeFullListBtn.id = 'closeListBtn';
         listWrp.appendChild(closeFullListBtn);
+
+        closeFullListBtn.addEventListener('click', ()=>{
+            console.log('click');
+            fadedBackdrop.innerHTML = '';
+            fadedBackdrop.remove();
+            mainWrp.innerHTML = '';
+            mainPage();
+            document.body.classList.remove('noScroll');
+        })
+    })
+    
+}
+function printFullListContent(list, headerClass, header, subitem){
+    list.insertAdjacentHTML('beforeend', `<li class = ${headerClass}>${header}</li><li class = "subItem">${subitem}</li>`);
+}
+function deleteItem(e, list){
+    fetch(deleteRoute, {
+        method: 'post',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({item_id: e.target.id, person: list})
+    })
+    .then(result => result.json())
+    .then(data => {
+        console.log(data.status);
+        fadedBackdrop.innerHTML = '';
+        showFullList(list);
     })
 }
-function printFullListContent(list, headerClass, header, item, subitem){
-    list.insertAdjacentHTML('beforeend', `<li class = ${headerClass}><h4>${header}</h4></li><li class = "subItem">${item[subitem]}</li>`);
-}
+
+
+// document.getElementById('fullListExitCornerBtn').addEventListener('click', ()=>{
+//     console.log('click on corner');
+// })

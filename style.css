@@ -19,6 +19,9 @@ body{
     background-color: #e6e6e6
     ;
 }
+#mainWrp{
+    min-height: 100%;
+}
 .sectionWrp{
     /* background-color: #8298FF; */
     
@@ -52,17 +55,16 @@ body{
 }
 .wishListItem{
     width: 80%;
-    /* background-color: #dfc5fa; */
-    
     border-radius: 3px;
     overflow: hidden;
-    /* box-shadow: 3px 3px 5px black; */
-    /* border: 3px solid dodgerblue; */
     box-sizing: border-box;
     color: white;
 }
 .wishListItem:hover{
     box-shadow: 0px 0px 10px white;
+}
+.wishListItem > li {
+    margin-left: 0.3em;
 }
 /* .wishListItemUl{
     list-style-type: none;
@@ -81,7 +83,7 @@ body{
     background-color: #666699;
 }
 #fadedBackdrop{
-    min-height: 100vh;
+    min-height: 100%;
     width: 100vw;
     position: absolute;
     background-color: rgba(0, 0, 0, 0.7);
@@ -91,54 +93,104 @@ body{
     width: 90%;
     background-color: white;
     margin: 0 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1em;
+}
+#formHeaderDiv{
+    display: flex;
+    justify-content: space-between;
+    background-color: #666699;
+    color: white;
+    padding: 0.2em;
+    align-items: center;
+}
+#closeFormWindow{
+    width: 50px;
+    height: 50px;
+}
+form{
+    display: flex;
+    flex-direction: column;
+    gap: 2em;
+    padding: 0.2em;
 }
 .warning{
     color: red;
 }
+#submitBtn{
+    width: 100px;
+    height: 50px;
+    margin: 0 auto;
+    margin-bottom: 1em;
+}
 .listWrp{
-    background: rgb(153,94,186);
-    background: linear-gradient(180deg, rgba(153,94,186,1) 0%, rgba(255,255,255,1) 50%);
+    /* background: rgb(153,94,186);
+    background: linear-gradient(180deg, rgba(153,94,186,1) 0%, rgba(255,255,255,1) 50%); */
+    background-color: #e6e6e6;
     width: 100%;
     margin: 0 auto;
     display: flex;
     flex-direction: column;
     align-items: center;
     gap: 25px;
+    position: fixed;
 }
 .fullListPerson{
     /* background-color: #995EBA; */
     color: white;
-    width: 100%;
+    width: 90%;
     text-align: center;
 }
 .fullListDiv{
-    width: 90%;
-    background-color: white;
-    /* box-shadow: 5px 5px 10px #3B3B3C; */
-    border-radius: 10px;
-    text-align: center;
+    width: 80%;
+    border-radius: 3px;
     overflow: hidden;
-    
+    box-sizing: border-box;
+    color: white;
+    text-align: center;
 }
 .fullListDiv li {
     padding: 5px;
 }
 .fullListItemName{
-    background-color: #DFBEEB;
     padding: 0;
 }
 .fullListHeading{
     text-decoration: underline;
+    font-weight: 700;
 }
 #fullListNameHeader{
     width: 100%;
-    position: sticky;
+    /* position: sticky; */
     top: 0;
     display: flex;
+    background-color: #666699;
 }
-#fullListExitBtn{
+#fullListExitCornerBtn{
     width: 10%;
     /* height: 100%; */
+}
+#closeListBtn{
+    border: 3px solid #333344;
+    font-size: 100%;
+    color: white;
+    width: 80%;
+    margin: 1em 0;
+    height: 2em;
+    background-color: #666699;
+
+}
+.listHeaderItemName{
+    display: flex;
+}
+.listHeaderItemNameCloseBtn{
+    width: 1.5em;
+    height: 1.5em;
+}
+.listHeaderItemNameDiv{
+    flex-grow: 1;
+    text-align: center;
 }
 .listGreen{
     background-color:#41967D;
@@ -175,4 +227,10 @@ body{
 }
 .listHeaderRed{
     background-color: #800000;
+}
+.redBorder{
+    border: 3px solid red;
+}
+.noScroll{
+    overflow: hidden;
 }
