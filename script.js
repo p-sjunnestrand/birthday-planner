@@ -1,9 +1,9 @@
 //LOCAL
-let userRoute = 'http://localhost:3000/users/';
-let deleteRoute = 'http://localhost:3000/users/delete';
+// let userRoute = 'http://localhost:3000/users/';
+// let deleteRoute = 'http://localhost:3000/users/delete';
 //CLOUD
-// let userRoute =
-// let deleteRoute =
+let userRoute = 'https://sjunnestrand-birthday.herokuapp.com/users'
+let deleteRoute = 'https://sjunnestrand-birthday.herokuapp.com/delete'
 
 let mainWrp = document.getElementById("mainWrp");
 
