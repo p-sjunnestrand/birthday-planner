@@ -80,8 +80,10 @@ function wishListLoad(){
     document.getElementById('wishList').addEventListener('click', e => {
         const personList = e.target.parentNode.id;
         console.log(personList);
-        showFullList(personList);
-        document.body.classList.add('noScroll');
+        if(personList !== 'wishListWrp'){
+            showFullList(personList);
+            document.body.classList.add('noScroll');
+        }
     })
 }
 //Adds dynamic wish list items to wishList

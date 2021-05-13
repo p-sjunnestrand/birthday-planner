@@ -43,7 +43,7 @@ body{
     flex-direction: column;
     overflow: auto;
     align-items: center;
-    gap: 1.5em;
+    /* gap: 1.5em; */
     margin: 1em 0;
 }
 .listItemHeader{
@@ -59,6 +59,7 @@ body{
     overflow: hidden;
     box-sizing: border-box;
     color: white;
+    margin: 0.75em 0;
 }
 .wishListItem:hover{
     box-shadow: 0px 0px 10px white;
