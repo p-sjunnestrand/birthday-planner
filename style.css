@@ -74,7 +74,7 @@ body{
     padding-left: 1em;
 } */
 #addListBtn{
-    all: revert;
+    /* all: revert; */
     border: 3px solid #333344;
     font-size: 100%;
     color: white;
@@ -94,10 +94,12 @@ body{
 #addListFormWrp{
     width: 90%;
     background-color: white;
-    margin: 0 auto;
+    /* margin: 0 auto; */
     display: flex;
     flex-direction: column;
     gap: 1em;
+    position: fixed;
+    left: 5%;
 }
 #formHeaderDiv{
     display: flex;
@@ -110,11 +112,14 @@ body{
 #closeFormWindow{
     width: 50px;
     height: 50px;
+    background-color: #3C3C59;
+    color: white;
+    border: 2px solid white;
 }
 form{
     display: flex;
     flex-direction: column;
-    gap: 2em;
+    /* gap: 2em; */
     padding: 0.2em;
 }
 .warning{
@@ -123,8 +128,13 @@ form{
 #submitBtn{
     width: 100px;
     height: 50px;
-    margin: 0 auto;
-    margin-bottom: 1em;
+    margin: 1em auto;
+    background-color: #666699;
+    color: white;
+    /* border: 2px solid white; */
+    border: 3px solid #333344;
+
+    /* margin-bottom: 1em; */
 }
 .listWrp{
     /* background: rgb(153,94,186);
@@ -250,4 +260,7 @@ form{
 #totalWrp{
     overflow: hidden;
     position: relative;
+}
+.formItem{
+    margin: 1em 0;
 }

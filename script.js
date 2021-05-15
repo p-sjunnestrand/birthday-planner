@@ -1,9 +1,9 @@
 //LOCAL
-let userRoute = 'http://localhost:3000/users/';
-let deleteRoute = 'http://localhost:3000/users/delete';
+// let userRoute = 'http://localhost:3000/users/';
+// let deleteRoute = 'http://localhost:3000/users/delete';
 //CLOUD
-// let userRoute = 'https://sjunnestrand-birthday.herokuapp.com/users'
-// let deleteRoute = 'https://sjunnestrand-birthday.herokuapp.com/delete'
+let userRoute = 'https://sjunnestrand-birthday.herokuapp.com/users'
+let deleteRoute = 'https://sjunnestrand-birthday.herokuapp.com/delete'
 
 let mainWrp = document.getElementById("mainWrp");
 let totalWrp = document.getElementById("totalWrp");
@@ -128,7 +128,7 @@ function loadListForm () {
 
     const addListForm = document.createElement('form');
     addListFormWrp.appendChild(addListForm);
-    addListForm.insertAdjacentHTML('beforeend', `<div id="selectDiv"><label for = "selectPerson">Person:</label></div>`);
+    addListForm.insertAdjacentHTML('beforeend', `<div id="selectDiv" class="formItem"><label for = "selectPerson">Person:</label></div>`);
 
     const selectPerson = document.createElement('select');
     selectPerson.id = 'selectPerson';
@@ -144,29 +144,30 @@ function loadListForm () {
     });
     document.getElementById('selectDiv').appendChild(selectPerson);
 
-    addListForm.insertAdjacentHTML('beforeend', `<div id="presentDiv"><label for = "presentInput">ösnkar sig:</label></div>`);
+    addListForm.insertAdjacentHTML('beforeend', `<div id="presentDiv" class="formItem"><label for = "presentInput">ösnkar sig:</label></div>`);
     const presentInput = document.createElement('input');
     presentInput.id = "presentInput";
     // presentInput.attributes.required = "required";
     document.getElementById('presentDiv').appendChild(presentInput);
 
-    addListForm.insertAdjacentHTML('beforeend', `<div id="presentDescDiv"<label for = "presentDesc">Ev. beskrivning av önskemålet</label>`);
+    addListForm.insertAdjacentHTML('beforeend', `<div id="presentDescDiv" class="formItem"><label for = "presentDesc">Ev. beskrivning av önskemålet</label>`);
     const presentDesc = document.createElement('textarea');
     presentDesc.id = "presentDesc";
     document.getElementById('presentDescDiv').appendChild(presentDesc);
 
-    addListForm.insertAdjacentHTML('beforeend', `<div id="presentURLdiv"><label for = "presentURL">Länk till ev. webbshop/hemsida för produkten:</label>`);
+    addListForm.insertAdjacentHTML('beforeend', `<div id="presentURLdiv" class="formItem"><label for = "presentURL">Länk till ev. webbshop/hemsida för produkten:</label>`);
     const presentURL = document.createElement('input');
     presentURL.id = "presentURL";
     document.getElementById('presentURLdiv').appendChild(presentURL);
 
-    addListForm.insertAdjacentHTML('beforeend', `<div id="presentShopDiv"><label for = "presentShop">Ev. butik där det önskade kan köpas</label>`);
+    addListForm.insertAdjacentHTML('beforeend', `<div id="presentShopDiv" class="formItem"><label for = "presentShop">Ev. butik där det önskade kan köpas</label>`);
     const presentShop = document.createElement('input');
     presentShop.id = "presentShop";
     document.getElementById('presentShopDiv').appendChild(presentShop);
 
     const submitBtn = document.createElement("button");
     submitBtn.id = "submitBtn";
+    submitBtn.classList.add('formItem');
     submitBtn.textContent = "Lägg till";
     addListForm.appendChild(submitBtn);
 
