@@ -3,7 +3,7 @@
 // let deleteRoute = 'http://localhost:3000/users/delete';
 //CLOUD
 let userRoute = 'https://sjunnestrand-birthday.herokuapp.com/users'
-let deleteRoute = 'https://sjunnestrand-birthday.herokuapp.com/delete'
+let deleteRoute = 'https://sjunnestrand-birthday.herokuapp.com/users/delete'
 
 let mainWrp = document.getElementById("mainWrp");
 let totalWrp = document.getElementById("totalWrp");
