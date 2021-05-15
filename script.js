@@ -1,12 +1,12 @@
 //LOCAL
-// let userRoute = 'http://localhost:3000/users/';
-// let deleteRoute = 'http://localhost:3000/users/delete';
+let userRoute = 'http://localhost:3000/users/';
+let deleteRoute = 'http://localhost:3000/users/delete';
 //CLOUD
-let userRoute = 'https://sjunnestrand-birthday.herokuapp.com/users'
-let deleteRoute = 'https://sjunnestrand-birthday.herokuapp.com/delete'
+// let userRoute = 'https://sjunnestrand-birthday.herokuapp.com/users'
+// let deleteRoute = 'https://sjunnestrand-birthday.herokuapp.com/delete'
 
 let mainWrp = document.getElementById("mainWrp");
-
+let totalWrp = document.getElementById("totalWrp");
 const fadedBackdrop = document.createElement('div');
 fadedBackdrop.id = 'fadedBackdrop';
 
@@ -82,7 +82,7 @@ function wishListLoad(){
         console.log(personList);
         if(personList !== 'wishListWrp'){
             showFullList(personList);
-            document.body.classList.add('noScroll');
+            mainWrp.classList.add('noScroll');
         }
     })
 }
@@ -100,7 +100,7 @@ function addLists(inventory, person){
 function loadListForm () {
     //adds faded backdrop to shift focus to form
     document.getElementById('addListBtn').disabled = true;
-    document.body.insertAdjacentElement("afterbegin", fadedBackdrop);
+    totalWrp.insertAdjacentElement("afterbegin", fadedBackdrop);
 
     //adds div in which form is placed
     const addListFormWrp = document.createElement('article');
@@ -237,7 +237,7 @@ function itemPosted(present, person) {
 }
 function showFullList(list){
     console.log(list);
-    document.body.insertAdjacentElement("afterbegin", fadedBackdrop);
+    totalWrp.insertAdjacentElement("afterbegin", fadedBackdrop);
     let listWrp = document.createElement('div');
     listWrp.classList.add('listWrp');
     fadedBackdrop.appendChild(listWrp);
@@ -266,7 +266,7 @@ function showFullList(list){
                     fadedBackdrop.remove();
                     mainWrp.innerHTML = '';
                     mainPage();
-                    document.body.classList.remove('noScroll');
+                    mainWrp.classList.remove('noScroll');
                 })
 
                 let incr = 0;
@@ -343,7 +343,7 @@ function showFullList(list){
             fadedBackdrop.remove();
             mainWrp.innerHTML = '';
             mainPage();
-            document.body.classList.remove('noScroll');
+            mainWrp.classList.remove('noScroll');
         })
     })
     
@@ -367,7 +367,28 @@ function deleteItem(e, list){
     })
 }
 
+function login(){
+    if (!localStorage){
+        const loginWrp = document.createElement('section');
+        loginWrp.id = 'loginWrp';
+        mainWrp.appendChild(loginWrp);
 
+        const loginFormDiv = document.createElement('div');
+        loginFormDiv.id = 'loginFormDiv';
+        loginWrp.appendChild(loginFormDiv);
+
+        const loginForm = document.createElement('div');
+        loginForm.id = 'loginForm';
+        loginFormDiv.appendChild(loginForm);
+
+        let userNameInput = document.createElement('input');
+        userNameInput.id = 'userNameInput';
+        let userPswInput = document.createElement('input');
+        userPswInput.id = 'userPswInput';
+
+        loginForm.append(userPswInput, userPswInput);
+    }
+}
 // document.getElementById('fullListExitCornerBtn').addEventListener('click', ()=>{
 //     console.log('click on corner');
 // })
