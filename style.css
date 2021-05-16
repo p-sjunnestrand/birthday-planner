@@ -180,6 +180,8 @@ form{
     display: flex;
     background-color: #666699;
     padding: 0.3em;
+    height: 3.4rem;
+    align-items: center;
 }
 #fullListExitCornerBtn{
     width: 10%;
@@ -188,7 +190,7 @@ form{
     color: white;
     border: 2px solid white;
     margin-right: 0.2em;
-    /* height: 100%; */
+    height: 100%;
 
 }
 #closeListBtn{
@@ -203,10 +205,11 @@ form{
 }
 .listHeaderItemName{
     display: flex;
+    align-items: center;
 }
 .listHeaderItemNameCloseBtn{
-    width: 1.5em;
-    height: 1.5em;
+    width: 2.5em;
+    height: 2.5em;
     background-color: #3C3C59;
     color: white;
     border: 2px solid white;

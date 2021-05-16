@@ -285,7 +285,9 @@ function showFullList(list){
                     listUl.addEventListener('click', (e)=>{
                         if(e.target.nodeName === 'BUTTON'){
                             console.log('click on button!');
-                            deleteItem(e, list);
+                            if(window.confirm("Är du säker på att du vill ta bort det här önskemålet?")){
+                                deleteItem(e, list);
+                            }
                         }
                     })
                     console.log(item);
