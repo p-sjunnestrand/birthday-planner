@@ -35,7 +35,7 @@ function mainPage (){
     wishListWrp.appendChild(addListBtn);
 
     document.getElementById('addListBtn').addEventListener('click', () => {
-        console.log('load form');
+        // console.log('load form');
         loadListForm();
     
     })
@@ -48,7 +48,7 @@ function wishListLoad(){
     fetch(userRoute)
     .then(result => result.json())
     .then(data => {
-        console.log(data);
+        // console.log(data);
         data.forEach((obj, index) => {
             if(obj.items > 0){
                 // console.log(person);
@@ -79,7 +79,7 @@ function wishListLoad(){
     })
     document.getElementById('wishList').addEventListener('click', e => {
         const personList = e.target.parentNode.id;
-        console.log(personList);
+        // console.log(personList);
         if(personList !== 'wishListWrp'){
             showFullList(personList);
             // mainWrp.classList.add('noScroll');
@@ -89,9 +89,9 @@ function wishListLoad(){
 //Adds dynamic wish list items to wishList
 function addLists(inventory, person){
     inventory.forEach(item => {
-        console.log(item);
+        // console.log(item);
         let listItemAdd = document.getElementById(person.person);
-        console.log(listItemAdd);
+        // console.log(listItemAdd);
         listItemAdd.insertAdjacentHTML('beforeend', `<li>${item.item_name}</li>`);
     })
 }
@@ -183,9 +183,9 @@ function loadListForm () {
 
     document.getElementById('submitBtn').addEventListener('click', evt =>{
         evt.preventDefault();
-        console.log('click');
+        // console.log('click');
         if (selectPerson.value === '' || presentInput.value === ''){
-            console.log('Välj person och önskemål!');
+            // console.log('Välj person och önskemål!');
             submitWarning.innerHTML = 'Välj en person och skriv något hen önskar sig!';
             // selectPerson.style.border = '3px solid red';
             // presentInput.style.border = '3px solid red';
@@ -204,7 +204,7 @@ function loadListForm () {
                     "item_id": ""
                 }
             }
-            console.log(postedItem);
+            // console.log(postedItem);
             fetch(userRoute, {
                 method: 'post',
                 headers: {
@@ -214,7 +214,7 @@ function loadListForm () {
             })
             .then(result => result.json())
             .then(data => {
-                console.log(data);
+                // console.log(data);
                 if(data.status !== "added"){
                     itemNotPosted();
                 } else {
@@ -237,7 +237,7 @@ function itemPosted(present, person) {
     presentShop.value = '';
 }
 function showFullList(list){
-    console.log(list);
+    // console.log(list);
     totalWrp.insertAdjacentElement("afterbegin", fadedBackdrop);
     let listWrp = document.createElement('div');
     listWrp.classList.add('listWrp');
@@ -245,12 +245,12 @@ function showFullList(list){
     fetch(userRoute)
     .then(result => result.json())
     .then(data => {
-        console.log(data);
+        // console.log(data);
         data.forEach((obj, index) => {
             if(obj.person === list){
-                console.log(obj);
+                // console.log(obj);
                 fetchedInventory = obj.inventory;
-                console.log(fetchedInventory);
+                // console.log(fetchedInventory);
                 const fullListNameHeader = document.createElement('div');
                 fullListNameHeader.insertAdjacentHTML('beforeend', `<h2 class ="fullListPerson">${obj.person}s önskelista</h2>`);
                 fullListNameHeader.id = 'fullListNameHeader';
@@ -262,7 +262,7 @@ function showFullList(list){
                 listWrp.appendChild(fullListNameHeader);
                 
                 fullListExitBtn.addEventListener('click', ()=>{
-                    console.log('click on corner');
+                    // console.log('click on corner');
                     fadedBackdrop.innerHTML = '';
                     fadedBackdrop.remove();
                     mainWrp.innerHTML = '';
@@ -284,16 +284,16 @@ function showFullList(list){
 
                     listUl.addEventListener('click', (e)=>{
                         if(e.target.nodeName === 'BUTTON'){
-                            console.log('click on button!');
+                            // console.log('click on button!');
                             if(window.confirm("Är du säker på att du vill ta bort det här önskemålet?")){
                                 deleteItem(e, list);
                             }
                         }
                     })
-                    console.log(item);
+                    // console.log(item);
                     for(subitem in item){
-                        console.log(item.item_id);
-                        console.log(item[subitem]);
+                        // console.log(item.item_id);
+                        // console.log(item[subitem]);
                         let subItemConts = item[subitem];
                         if (item[subitem] !== ''){
                             switch (subitem){
@@ -341,7 +341,7 @@ function showFullList(list){
         listWrp.appendChild(closeFullListBtn);
 
         closeFullListBtn.addEventListener('click', ()=>{
-            console.log('click');
+            // console.log('click');
             fadedBackdrop.innerHTML = '';
             fadedBackdrop.remove();
             mainWrp.innerHTML = '';
@@ -364,7 +364,7 @@ function deleteItem(e, list){
     })
     .then(result => result.json())
     .then(data => {
-        console.log(data.status);
+        // console.log(data.status);
         fadedBackdrop.innerHTML = '';
         showFullList(list);
     })
