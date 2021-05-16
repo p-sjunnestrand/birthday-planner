@@ -82,7 +82,7 @@ function wishListLoad(){
         console.log(personList);
         if(personList !== 'wishListWrp'){
             showFullList(personList);
-            mainWrp.classList.add('noScroll');
+            // mainWrp.classList.add('noScroll');
         }
     })
 }
@@ -267,7 +267,7 @@ function showFullList(list){
                     fadedBackdrop.remove();
                     mainWrp.innerHTML = '';
                     mainPage();
-                    mainWrp.classList.remove('noScroll');
+                    // mainWrp.classList.remove('noScroll');
                 })
 
                 let incr = 0;
@@ -344,7 +344,7 @@ function showFullList(list){
             fadedBackdrop.remove();
             mainWrp.innerHTML = '';
             mainPage();
-            mainWrp.classList.remove('noScroll');
+            // mainWrp.classList.remove('noScroll');
         })
     })
     

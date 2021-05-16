@@ -254,12 +254,13 @@ form{
 .redBorder{
     border: 3px solid red;
 }
-.noScroll{
+/* .noScroll{
     overflow: hidden;
-}
+} */
 #totalWrp{
     overflow: hidden;
     position: relative;
+    min-height: 100vh;
 }
 .formItem{
     margin: 1em 0;
